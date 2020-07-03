@@ -24,6 +24,9 @@ public class UserSevice implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    MailSenderService mailSender;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
@@ -45,21 +48,33 @@ public class UserSevice implements UserDetailsService {
         user.setActive(false);
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEmail(user.getEmail());
 
         userRepo.save(user);
+
+
         return true;
     }
 
     public boolean addUserAdmin(User user) {
         User existingUser = userRepo.findByUsername(user.getUsername());
+        User existingEmail = userRepo.findByEmail(user.getEmail());
 
         if (existingUser != null) {
             return false;
         }
 
+        if (existingEmail != null) {
+            return false;
+        }
+
+
+
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUsername(user.getUsername());
+        user.setEmail(user.getEmail());
 
         userRepo.save(user);
         return true;
@@ -89,8 +104,9 @@ public class UserSevice implements UserDetailsService {
         userRepo.save(user);
     }
 
-    public void updateProfile(User user, String username, String password) {
+    public void updateProfile(User user, String username, String password, String email) {
         user.setUsername(username);
+        user.setEmail(email);
         if (!StringUtils.isEmpty(password)) {
             user.setPassword(passwordEncoder.encode(password));
         }

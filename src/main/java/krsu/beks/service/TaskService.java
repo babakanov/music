@@ -7,6 +7,7 @@ import krsu.beks.repository.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -16,8 +17,9 @@ public class TaskService {
 
     public boolean addNewTask(User user, Task task) {
         task.setAuthor(user);
-        task.setCreationDate(LocalDateTime.now());
+        task.setCreateOnDate(LocalDateTime.now());
         task.setStatus(Status.NEW);
+        task.setDeadline(task.getDeadline());
         taskRepo.save(task);
         return true;
     }
@@ -31,7 +33,7 @@ public class TaskService {
         task.setDescription(description);
         task.setStatus(status);
         task.setImportance(importance);
-        task.setCreationDate(LocalDateTime.now());
+        task.setCreateOnDate(LocalDateTime.now());
         task.setAuthor(user);
         taskRepo.save(task);
     }

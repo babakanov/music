@@ -1,6 +1,10 @@
 package krsu.beks.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,12 +14,26 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime creationDate;
+    @Column
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDateTime createOnDate;
+
+    @Column
+    @NotBlank(message = "Name cannot be empty")
     private String name;
+
+    @Column
+    @NotBlank(message = "Description cannot be empty")
     private String description;
+
+    @Column
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate deadline;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Column
     private Boolean importance;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -30,12 +48,13 @@ public class Task {
         this.id = id;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+
+    public LocalDateTime getCreateOnDate() {
+        return createOnDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public void setCreateOnDate(LocalDateTime createOnDate) {
+        this.createOnDate = createOnDate;
     }
 
     public String getName() {
@@ -76,5 +95,13 @@ public class Task {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
     }
 }

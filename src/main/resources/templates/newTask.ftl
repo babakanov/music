@@ -20,6 +20,13 @@
         </div>
 
         <div>
+            <label class="col-sm-2 col-form-label">Deadline:</label>
+            <div class="col-sm-6">
+                <input type="date" name="deadline" class="form-control" />
+            </div>
+        </div>
+
+        <div>
             <select name="importance" class="custom-select">
                 <option selected="selected">Selected active</option>
                 <option value="true">Critically</option>

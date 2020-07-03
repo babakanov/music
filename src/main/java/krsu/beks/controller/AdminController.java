@@ -43,11 +43,15 @@ public class AdminController {
             return "addUser";
         }
 
+        if (user.getEmail() != null) {
+            model.addAttribute("emailErrors", "Email are different!");
+        }
+
         if (!userSevice.addUserAdmin(user)) {
             model.addAttribute("usernameError", "User exists!");
             return "addUser";
         }
-        return "redirect:/user/userList";
+        return "redirect:/user";
     }
 
 }

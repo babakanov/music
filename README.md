@@ -1,11 +1,11 @@
 База данных: PostgreSQL
 После регистрации вводим SQL команду в БД : 
 
-update usr set role = 'ADMIN' where id = 1
+update usr set active = 'true' where id = 1
 
 Присваиваем роль Админа:
 
-insert into user_role (user_id,roles) values (, 'ADMIN');
+insert into user_role (user_id,roles) values ('ADMIN');
 
 Возможности: обычный quest может зарегистрироваться сам, но пока админ не поставит Acitve на YES он не сможет зайти
 	     админ может создавать User -a, при создании админом , User может сразу зайти в систему.

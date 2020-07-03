@@ -9,7 +9,8 @@
         <th>Name</th>
         <th>Role</th>
         <th>Active</th>
-        <th></th>
+        <th>Email</th>
+        <th>Edit</th>
     </tr>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
             <td>${user.username}</td>
             <td><#list user.roles as role>${role}<#sep>, </#list></td>
             <td>${user.active?string('Yes', 'No') }</td>
+            <td>${user.email}</td>
             <td><a href="/user/${user.id}">Edit</a></td>
         </tr>
     </#list>
