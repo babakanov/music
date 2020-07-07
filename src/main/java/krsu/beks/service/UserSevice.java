@@ -68,8 +68,6 @@ public class UserSevice implements UserDetailsService {
             return false;
         }
 
-
-
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -86,7 +84,6 @@ public class UserSevice implements UserDetailsService {
     }
 
     public void saveUser(User user, Boolean active, Map<String, String> form) {
-
         user.setActive(active);
 
         Set<String> roles = Arrays.stream(Role.values())

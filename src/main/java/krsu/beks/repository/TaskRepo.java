@@ -15,5 +15,4 @@ public interface TaskRepo extends JpaRepository<Task, Long> {
 
     @Query( value = "select * from task where status NOT IN ('DONE')", nativeQuery = true)
     List<Task> findAllByStatus();
-
 }

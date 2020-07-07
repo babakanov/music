@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class DeadlinePassedService {
@@ -18,16 +19,18 @@ public class DeadlinePassedService {
     @Autowired
     TaskRepo taskRepo;
 
-   private LocalDate date = LocalDate.now();
-
     @Scheduled(cron = "*/10 * * * * *")
     public void sendMessage() {
-
-
-        for (Task task: taskRepo.findAllByStatus()) {
-            String message = "Deadline passed";
-            String subject = "Deadline";
-            mailSenderService.send(task.getAuthor().getEmail(),subject,message);
+        List<Task> taskList = taskRepo.findAllByStatus();
+        if (taskList.isEmpty()){
+            return;
+        }
+        for (Task task: taskList) {
+            if (task.getDeadline().equals(LocalDate.now())) {
+                String message = "Deadline passed";
+                String subject = "Deadline";
+                mailSenderService.send(task.getAuthor().getEmail(), subject, message);
+            }
         }
 
     }
