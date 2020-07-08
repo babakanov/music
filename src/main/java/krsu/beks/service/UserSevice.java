@@ -16,16 +16,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserSevice implements UserDetailsService {
-    private  boolean b;
 
-    @Autowired
     private UserRepo userRepo;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
     MailSenderService mailSender;
+
+    public UserSevice(UserRepo userRepo, PasswordEncoder passwordEncoder,  MailSenderService mailSender) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
+        this.mailSender = mailSender;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

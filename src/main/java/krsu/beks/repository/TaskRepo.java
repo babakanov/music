@@ -13,6 +13,6 @@ public interface TaskRepo extends JpaRepository<Task, Long> {
 
     void deleteById(Long id);
 
-    @Query( value = "select * from task where status NOT IN ('DONE')", nativeQuery = true)
+    @Query( value = "select * from task where status NOT IN ('DONE') and deadline > CURRENT_DATE", nativeQuery = true)
     List<Task> findAllByStatus();
 }

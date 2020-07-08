@@ -12,8 +12,12 @@ import java.time.LocalDateTime;
 
 @Service
 public class TaskService {
-    @Autowired
+
     private TaskRepo taskRepo;
+
+    public TaskService(TaskRepo taskRepo) {
+        this.taskRepo = taskRepo;
+    }
 
     public boolean addNewTask(User user, Task task) {
         task.setAuthor(user);

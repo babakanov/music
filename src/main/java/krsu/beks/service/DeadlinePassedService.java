@@ -13,26 +13,27 @@ import java.util.List;
 @Service
 public class DeadlinePassedService {
 
-    @Autowired
-    MailSenderService mailSenderService;
+    private MailSenderService mailSenderService;
 
-    @Autowired
-    TaskRepo taskRepo;
+    private TaskRepo taskRepo;
+
+    public DeadlinePassedService(MailSenderService mailSenderService, TaskRepo taskRepo) {
+        this.mailSenderService = mailSenderService;
+        this.taskRepo = taskRepo;
+    }
 
     @Scheduled(cron = "*/10 * * * * *")
     public void sendMessage() {
         List<Task> taskList = taskRepo.findAllByStatus();
-        if (taskList.isEmpty()){
-            return;
-        }
-        for (Task task: taskList) {
-            if (task.getDeadline().equals(LocalDate.now())) {
+        if (!taskList.isEmpty()){
+            for (Task task: taskList) {
                 String message = "Deadline passed";
                 String subject = "Deadline";
                 mailSenderService.send(task.getAuthor().getEmail(), subject, message);
             }
+        }else {
+            new NullPointerException("List is Empty");
         }
-
     }
     
 }
